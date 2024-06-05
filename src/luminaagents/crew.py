@@ -7,6 +7,11 @@ from crewai.project import CrewBase, agent, crew, task
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
 from crewai_tools import SerperDevTool
+from langchain_groq import ChatGroq
+# Agent(
+#     # ...
+#     llm=self.groq_llm
+# )
 
 
 @CrewBase
@@ -15,11 +20,14 @@ class LuminaagentsCrew():
     agents_config = 'config/agents.yaml'
     tasks_config = 'config/tasks.yaml'
 
+    groq_llm = ChatGroq(temperature=0.7, model_name="llama3-70b-8192")
+
     @agent
     def journal_analyzer(self) -> Agent:
         return Agent(
             config=self.agents_config['journal_analyzer'],
-            verbose=True
+            verbose=True,
+            llm=self.groq_llm
         )
 
     @agent
@@ -28,21 +36,24 @@ class LuminaagentsCrew():
             config=self.agents_config['researcher'],
             # Example of custom tool, loaded on the beginning of file
             tools=[SerperDevTool()],
-            verbose=True
+            verbose=True,
+            llm=self.groq_llm
         )
 
     @agent
     def planner(self) -> Agent:
         return Agent(
             config=self.agents_config['planner'],
-            verbose=True
+            verbose=True,
+            llm=self.groq_llm
         )
 
     @task
     def analyze_journal_task(self) -> Task:
         return Task(
             config=self.tasks_config['analyze_journal_task'],
-            agent=self.journal_analyzer()
+            agent=self.journal_analyzer(),
+            llm=self.groq_llm
         )
 
     @task
