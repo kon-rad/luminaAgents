@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 from luminaagents.crew import LuminaagentsCrew
 
+import agentops
+agentops.init()
+
 
 def run():
     # Replace with your inputs, it will automatically interpolate any tasks and agents information
