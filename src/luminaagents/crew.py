@@ -1,13 +1,16 @@
+from langchain_groq import ChatGroq
+from crewai_tools import SerperDevTool
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from crewai_tools import EXASearchTool
 
+# Initialize the tool for internet searching capabilities
+tool = EXASearchTool()
 # Uncomment the following line to use an example of a custom tool
 # from luminaagents.tools.custom_tool import MyCustomTool
 
 # Check our tools documentations for more information on how to use them
 # from crewai_tools import SerperDevTool
-from crewai_tools import SerperDevTool
-from langchain_groq import ChatGroq
 # Agent(
 #     # ...
 #     llm=self.groq_llm
@@ -35,7 +38,7 @@ class LuminaagentsCrew():
         return Agent(
             config=self.agents_config['researcher'],
             # Example of custom tool, loaded on the beginning of file
-            tools=[],
+            tools=[EXASearchTool()],
             verbose=True,
             llm=self.groq_llm
         )
