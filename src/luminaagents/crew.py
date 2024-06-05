@@ -35,7 +35,7 @@ class LuminaagentsCrew():
         return Agent(
             config=self.agents_config['researcher'],
             # Example of custom tool, loaded on the beginning of file
-            tools=[SerperDevTool()],
+            tools=[],
             verbose=True,
             llm=self.groq_llm
         )
